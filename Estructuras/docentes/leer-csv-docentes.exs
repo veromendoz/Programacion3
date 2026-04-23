@@ -1,9 +1,9 @@
 defmodule Estructuras do
   def main do
     "Docentes_Uniquindio_20240817.csv"
-    |> Docente.leer_csv()
-    |> filtrar_datos_interes()
-    |> Docente.generar_mensaje_docente(&generar_mensaje/1)
+    |> CSV.leer_csv(&Docente.convertir_cadena_docente/1)
+    |> Enum.filter(&(&1.formacion == "MAESTRIA" and &1.vinculacion == "PLANTA"))
+    |> CSV.generar_mensaje_csv(&generar_mensaje/1)
     |> Util.mostrar_mensaje()
   end
 
