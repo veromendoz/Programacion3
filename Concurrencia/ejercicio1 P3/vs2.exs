@@ -1,4 +1,4 @@
-defmodule MatrizOps do
+defmodule Matriz do
 
   # S1: suma debajo de la diagonal principal
   def suma_debajo_diag(matriz) do
@@ -17,13 +17,13 @@ defmodule MatrizOps do
     end)
   end
 
-  # S2: promedio de toda la matriz
+  # S2
   def promedio(matriz) do
     {suma, count} =
-      matriz
-      |> List.flatten()
-      |> Enum.reduce({0, 0}, fn val, {s, c} ->
-        {s + val, c + 1}
+      Enum.reduce(matriz, {0, 0}, fn fila, {s, c} ->
+        Enum.reduce(fila, {s, c}, fn val, {s2, c2} ->
+          {s2 + val, c2 + 1}
+        end)
       end)
 
     suma / count
@@ -37,7 +37,7 @@ defmodule MatrizOps do
       [5, 101, 6, 34]
     ]
 
-    # Lanzar tareas (procesos)
+    # Procesos en paralelo
     t1 = Task.async(fn -> suma_debajo_diag(matriz) end)
     t2 = Task.async(fn -> promedio(matriz) end)
 
@@ -54,4 +54,4 @@ defmodule MatrizOps do
 end
 
 # Ejecutar
-MatrizOps.main()
+Matriz.main()

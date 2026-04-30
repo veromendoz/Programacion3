@@ -20,13 +20,13 @@ defmodule MatrizOps do
     send(parent, {:s1, suma})
   end
 
-  # S2: promedio de toda la matriz
+  # S2
   def promedio(matriz, parent) do
     {suma, count} =
-      matriz
-      |> List.flatten()
-      |> Enum.reduce({0, 0}, fn val, {s, c} ->
-        {s + val, c + 1}
+      Enum.reduce(matriz, {0, 0}, fn fila, {s, c} ->
+        Enum.reduce(fila, {s, c}, fn val, {s2, c2} ->
+          {s2 + val, c2 + 1}
+        end)
       end)
 
     promedio = suma / count
@@ -35,9 +35,10 @@ defmodule MatrizOps do
 
   def main do
     matriz = [
-      [1, 2, 3],
-      [4, 5, 6],
-      [7, 8, 9]
+      [60, 22, 41, 5],
+      [13, 33, 44, 5],
+      [89, 10, 100, 99],
+      [5, 101, 6, 34]
     ]
 
     parent = self()
